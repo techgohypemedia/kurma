@@ -37,25 +37,20 @@ export function Navbar({ cartCount, onOpenCart, onExploreProducts }: NavbarProps
     <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-stone-200 text-stone-900 transition-all shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="relative w-10 h-10 flex items-center justify-center shrink-0">
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center shrink-0">
             <Image
-              src="/images/kurma-logo-white.jpg"
+              src="/images/kurma-turtle-transparent.png"
               alt="Kurma Logo"
-              width={40}
-              height={40}
-              className="w-10 h-10 object-contain rounded-full"
+              width={64}
+              height={64}
+              className="w-full h-full object-contain"
               priority
             />
           </div>
-          <div className="flex flex-col">
-            <span className="font-serif tracking-[0.14em] text-[15px] font-bold text-stone-900 leading-tight">
-              KURMA
-            </span>
-            <span className="font-serif tracking-[0.12em] text-[12px] text-[#c0881b] leading-tight">
-              SACRED IMPRESSIONS
-            </span>
-          </div>
+          <span className="font-serif tracking-[0.18em] text-[20px] sm:text-[22px] font-bold text-stone-900 leading-none">
+            KURMA
+          </span>
         </Link>
 
         {/* Desktop Navigation Links */}
@@ -71,7 +66,7 @@ export function Navbar({ cartCount, onOpenCart, onExploreProducts }: NavbarProps
                 href={link.href}
                 className={`flex items-center gap-1 transition-colors hover:text-[#c0881b] cursor-pointer ${
                   link.active
-                    ? "text-[#c0881b] font-semibold border-b-[2px] border-[#c0881b] pb-1"
+                    ? "text-[#c0881b] font-semibold"
                     : "text-stone-700"
                 }`}
               >
