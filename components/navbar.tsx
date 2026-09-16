@@ -8,35 +8,35 @@ import { ChevronDown, ShoppingBag, Menu, X } from "lucide-react";
 interface NavbarProps {
   cartCount: number;
   onOpenCart: () => void;
-  onRequestQuote: () => void;
+  onExploreProducts?: () => void;
 }
 
-export function Navbar({ cartCount, onOpenCart, onRequestQuote }: NavbarProps) {
+export function Navbar({ cartCount, onOpenCart, onExploreProducts }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const navLinks = [
     { name: "Home", href: "#home", active: true },
     {
-      name: "Corporate Gifts",
+      name: "Agarbatti Collection",
       href: "#categories",
       hasDropdown: true,
       items: [
-        { title: "Executive Hampers", desc: "Curated luxury for leadership & VIPs" },
-        { title: "Gourmet & Celebrations", desc: "Artisanal saffron, nuts & treats" },
-        { title: "Desk & Lifestyle Sets", desc: "Eco-friendly organizers & essentials" },
-        { title: "Festive Keepsakes", desc: "Handcrafted celebration boxes" },
+        { title: "Mysore Sandalwood Bathi", desc: "Pure aged chandan, 100% charcoal-free" },
+        { title: "Temple Flora & Mogra", desc: "Recycled holy flowers & sacred herbs" },
+        { title: "Rare Oudh & Loban Resins", desc: "Deep aromatic slow-burning sticks" },
+        { title: "Antique Brass Burners", desc: "Hand-carved lotus stands & pooja urlis" },
       ],
     },
-    { name: "Solutions", href: "#solutions" },
+    { name: "Signature Picks", href: "#bestsellers" },
+    { name: "Gift Sets", href: "#solutions" },
     { name: "Reviews", href: "#reviews" },
-    { name: "Contact", href: "#contact", isContact: true },
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white border-b border-stone-100 transition-all">
+    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-stone-200 text-stone-900 transition-all shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Brand Logo matching Image 1 */}
+        {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="relative w-10 h-10 flex items-center justify-center shrink-0">
             <Image
@@ -44,7 +44,7 @@ export function Navbar({ cartCount, onOpenCart, onRequestQuote }: NavbarProps) {
               alt="Kurma Logo"
               width={40}
               height={40}
-              className="w-10 h-10 object-contain"
+              className="w-10 h-10 object-contain rounded-full"
               priority
             />
           </div>
@@ -52,8 +52,8 @@ export function Navbar({ cartCount, onOpenCart, onRequestQuote }: NavbarProps) {
             <span className="font-serif tracking-[0.14em] text-[15px] font-bold text-stone-900 leading-tight">
               KURMA
             </span>
-            <span className="font-serif tracking-[0.12em] text-[12px] text-stone-700 leading-tight">
-              IMPRESSIONS
+            <span className="font-serif tracking-[0.12em] text-[12px] text-[#c0881b] leading-tight">
+              SACRED IMPRESSIONS
             </span>
           </div>
         </Link>
@@ -69,12 +69,6 @@ export function Navbar({ cartCount, onOpenCart, onRequestQuote }: NavbarProps) {
             >
               <a
                 href={link.href}
-                onClick={(e) => {
-                  if (link.isContact) {
-                    e.preventDefault();
-                    onRequestQuote();
-                  }
-                }}
                 className={`flex items-center gap-1 transition-colors hover:text-[#c0881b] cursor-pointer ${
                   link.active
                     ? "text-[#c0881b] font-semibold border-b-[2px] border-[#c0881b] pb-1"
@@ -89,7 +83,7 @@ export function Navbar({ cartCount, onOpenCart, onRequestQuote }: NavbarProps) {
 
               {/* Dropdown Menu */}
               {link.hasDropdown && openDropdown === link.name && (
-                <div className="absolute top-full left-0 w-72 bg-white shadow-xl rounded-xl border border-stone-100 p-2 mt-1 animate-in fade-in-50 duration-150">
+                <div className="absolute top-full left-0 w-72 bg-white shadow-xl rounded-xl border border-stone-100 p-2 mt-1 animate-in fade-in-50 duration-150 text-stone-900">
                   {link.items?.map((item, idx) => (
                     <a
                       key={idx}
@@ -111,22 +105,15 @@ export function Navbar({ cartCount, onOpenCart, onRequestQuote }: NavbarProps) {
         </nav>
 
         {/* Right Action CTAs */}
-        <div className="flex items-center gap-3.5">
-          <button
-            onClick={onRequestQuote}
-            className="hidden sm:inline-flex items-center justify-center px-4.5 py-2 bg-[#c0881b] hover:bg-[#a97514] text-white text-xs sm:text-sm font-medium rounded-md shadow-2xs hover:shadow transition-all duration-200 active:scale-[0.98]"
-          >
-            Request a Quote
-          </button>
-
-          {/* Cart Icon matching Image 1 */}
+        <div className="flex items-center gap-3">
+          {/* Cart Button */}
           <button
             onClick={onOpenCart}
-            className="relative p-2 text-stone-700 hover:text-[#c0881b] transition-colors"
-            aria-label="View shopping bag"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#c0881b] hover:bg-[#a97514] text-white text-xs sm:text-sm font-medium rounded-md shadow-xs hover:shadow transition-all duration-200 active:scale-[0.98] cursor-pointer"
           >
-            <ShoppingBag className="w-5 h-5 stroke-[1.75]" />
-            <span className="absolute top-1 right-0.5 w-3.5 h-3.5 bg-[#c0881b] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+            <ShoppingBag className="w-4 h-4 stroke-[2]" />
+            <span>Cart</span>
+            <span className="ml-0.5 px-1.5 py-0.2 bg-white/20 text-white rounded-full text-xs font-bold">
               {cartCount}
             </span>
           </button>
@@ -134,7 +121,7 @@ export function Navbar({ cartCount, onOpenCart, onRequestQuote }: NavbarProps) {
           {/* Mobile Hamburger Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-stone-600 hover:text-stone-900 lg:hidden rounded-lg hover:bg-stone-100"
+            className="p-2 text-stone-600 hover:text-stone-900 lg:hidden rounded-lg hover:bg-stone-100 cursor-pointer"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -144,18 +131,12 @@ export function Navbar({ cartCount, onOpenCart, onRequestQuote }: NavbarProps) {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-stone-200 px-6 py-4 space-y-3 shadow-lg">
+        <div className="lg:hidden bg-white border-b border-stone-200 px-6 py-4 space-y-3 shadow-lg text-stone-900">
           {navLinks.map((link) => (
             <div key={link.name} className="border-b border-stone-100 pb-2">
               <a
                 href={link.href}
-                onClick={(e) => {
-                  setMobileMenuOpen(false);
-                  if (link.isContact) {
-                    e.preventDefault();
-                    onRequestQuote();
-                  }
-                }}
+                onClick={() => setMobileMenuOpen(false)}
                 className="block text-sm font-medium text-stone-800 hover:text-[#c0881b]"
               >
                 {link.name}
@@ -166,11 +147,12 @@ export function Navbar({ cartCount, onOpenCart, onRequestQuote }: NavbarProps) {
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                onRequestQuote();
+                onOpenCart();
               }}
-              className="w-full py-2.5 bg-[#c0881b] hover:bg-[#a97514] text-white text-sm font-medium rounded-md text-center"
+              className="w-full py-2.5 bg-[#c0881b] hover:bg-[#a97514] text-white text-sm font-medium rounded-md text-center flex items-center justify-center gap-2 cursor-pointer"
             >
-              Request a Quote
+              <ShoppingBag className="w-4 h-4 stroke-[2]" />
+              <span>View Cart ({cartCount})</span>
             </button>
           </div>
         </div>

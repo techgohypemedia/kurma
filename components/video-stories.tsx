@@ -16,58 +16,53 @@ interface StoryItem {
   title: string;
   image: string;
   caption: string;
+  price: number;
 }
 
 interface VideoStoriesProps {
-  onRequestQuote: () => void;
+  onAddToCart?: (item: { id: string; name: string; price: number; image: string; quantity: number }) => void;
+  onExploreProducts?: () => void;
 }
 
 const storiesData: StoryItem[] = [
   {
     id: 1,
-    title: "Employee Onboarding Kit",
-    image: "/images/kurma-onboarding-box.jpg",
-    caption: "Premium welcome gift box unboxing with bespoke stationery & accessories.",
+    title: "Mysore Sandalwood Ritual",
+    image: "/images/agarbatti-sandalwood.jpg",
+    caption: "Pure aged chandan incense burning with delicate soothing aromatic smoke.",
+    price: 550,
   },
   {
     id: 2,
-    title: "Client Appreciation Hamper",
-    image: "/images/kurma-gift-box.jpg",
-    caption: "Thoughtful corporate hamper with handcrafted keepsake items.",
+    title: "Temple Flora & Rose Bathi",
+    image: "/images/agarbatti-temple-flora.jpg",
+    caption: "Sacred consecrated temple flowers hand-rolled into pure fragrant sticks.",
+    price: 480,
   },
   {
     id: 3,
-    title: "Luxury Scented Atmosphere",
-    image: "/images/cat-scented-candle.jpg",
-    caption: "Atmospheric amber glass candles infused with pure essential oils.",
+    title: "Handcrafted Lotus Burner",
+    image: "/images/agarbatti-brass-burner.jpg",
+    caption: "Antique brass lotus incense holder with fragrant white smoke spirals.",
+    price: 1450,
   },
   {
     id: 4,
-    title: "Festive Celebration Box",
-    image: "/images/kurma-festive-box.jpg",
-    caption: "Celebratory unboxing with artisanal sweets and festive packaging.",
+    title: "Imperial Incense Gift Trunk",
+    image: "/images/agarbatti-gift-hamper.jpg",
+    caption: "Luxury festive velvet trunk unboxing with assorted fragrances & brass diya.",
+    price: 2950,
   },
   {
     id: 5,
-    title: "Artisanal Gourmet Basket",
-    image: "/images/cat-gourmet-basket.jpg",
-    caption: "Handcrafted gourmet confectionery and festive dry fruits.",
-  },
-  {
-    id: 6,
-    title: "Personalized Desk Clock",
-    image: "/images/cat-desk-clock.jpg",
-    caption: "Timeless brass and matte-black desktop timepieces.",
-  },
-  {
-    id: 7,
-    title: "Wireless Charging Suite",
-    image: "/images/cat-wireless-charger.jpg",
-    caption: "Custom-branded wireless charging station in sleek aluminum finish.",
+    title: "Artisanal Charcoal-Free Oudh",
+    image: "/images/agarbatti-hero.jpg",
+    caption: "100% natural organic incense cylinders with zero eye-stinging soot.",
+    price: 890,
   },
 ];
 
-export function VideoStories({ onRequestQuote }: VideoStoriesProps) {
+export function VideoStories({ onAddToCart, onExploreProducts }: VideoStoriesProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -110,13 +105,14 @@ export function VideoStories({ onRequestQuote }: VideoStoriesProps) {
   };
 
   return (
-    <section className="w-full bg-white py-10 sm:py-14">
+    <section className="w-full bg-[#072515] bg-[url('/images/green-texture.png')] bg-repeat py-12 sm:py-16 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
-        <div className="mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight font-sans">
-            Joyful Gifting Stories
+        <div className="mb-8">
+          <h2 className="text-2xl sm:text-3xl font-serif text-white tracking-tight font-normal">
+            Sacred Incense &amp; Gifting Stories
           </h2>
+          <div className="h-0.5 w-24 bg-[#eed08e] mt-2.5" />
         </div>
 
         {/* Carousel Wrapper */}
@@ -153,7 +149,7 @@ export function VideoStories({ onRequestQuote }: VideoStoriesProps) {
               <div
                 key={story.id}
                 onClick={() => handleOpenModal(index)}
-                className="relative w-[190px] sm:w-[215px] lg:w-[230px] aspect-[9/15.5] h-[340px] sm:h-[380px] lg:h-[410px] shrink-0 rounded-2xl sm:rounded-[22px] overflow-hidden shadow-xs hover:shadow-xl border border-stone-200/80 group select-none bg-stone-900 transition-all duration-300 cursor-pointer"
+                className="relative w-[190px] sm:w-[215px] lg:w-[230px] aspect-[9/15.5] h-[340px] sm:h-[380px] lg:h-[410px] shrink-0 rounded-2xl sm:rounded-[22px] overflow-hidden shadow-xs hover:shadow-xl border border-[#eed08e]/30 hover:border-[#eed08e] group select-none bg-stone-900 transition-all duration-300 cursor-pointer"
               >
                 {/* Clean Image Only */}
                 <Image
@@ -277,14 +273,22 @@ export function VideoStories({ onRequestQuote }: VideoStoriesProps) {
                 </p>
                 <button
                   onClick={() => {
+                    const story = storiesData[activeStoryIndex];
                     handleCloseModal();
-                    onRequestQuote();
+                    if (onAddToCart) {
+                      onAddToCart({
+                        id: `story-${story.id}`,
+                        name: story.title,
+                        price: story.price,
+                        image: story.image,
+                        quantity: 1,
+                      });
+                    }
                   }}
-                  className="mt-3 w-full py-2.5 px-4 bg-[#c0881b] hover:bg-[#a67211] text-white text-xs font-medium rounded-lg flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+                  className="mt-3 w-full py-2.5 px-4 bg-[#c0881b] hover:bg-[#a67211] text-white text-xs font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-xs"
                 >
                   <ShoppingBag className="w-3.5 h-3.5" />
-                  <span>Inquire / Request Quote</span>
-                  <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                  <span>Add to Cart • ₹{storiesData[activeStoryIndex].price}</span>
                 </button>
               </div>
             </div>

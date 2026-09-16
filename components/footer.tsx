@@ -20,7 +20,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="w-full bg-[#f3f4f6] text-gray-800 border-t border-gray-200/80 font-sans">
+    <footer className="w-full bg-[#f3f4f6] text-gray-800 border-t border-gray-200 font-sans">
       {/* Top 6-Column Section with Vertical Dividers */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-0">
@@ -66,7 +66,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="#" className="hover:text-gray-900 transition-colors">
-                  Kurma Team
+                  Kurma Artisans
                 </Link>
               </li>
               <li>
@@ -86,7 +86,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="#" className="hover:text-gray-900 transition-colors">
-                  Blog
+                  Sacred Blog
                 </Link>
               </li>
             </ul>
@@ -95,17 +95,17 @@ export function Footer() {
           {/* Column 3: Kurma Business */}
           <div className="lg:px-6 lg:border-r lg:border-gray-200">
             <h3 className="text-sm font-bold text-gray-900 mb-3.5 tracking-tight">
-              Kurma Business
+              Kurma Incense
             </h3>
             <ul className="space-y-2 text-xs text-gray-600">
               <li>
                 <Link href="#" className="hover:text-gray-900 transition-colors">
-                  Decoration Services
+                  Temple Fragrances
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-gray-900 transition-colors">
-                  Corporate Service
+                  Corporate Gifting
                 </Link>
               </li>
               <li>
@@ -115,7 +115,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="#" className="hover:text-gray-900 transition-colors">
-                  Retails Stores
+                  Retail Boutiques
                 </Link>
               </li>
               <li>
@@ -181,7 +181,7 @@ export function Footer() {
               Subscribe Now
             </h3>
             <p className="text-xs text-gray-600 mb-3 leading-relaxed">
-              Get updates on promotions and offers coupons.
+              Get sacred aroma releases and exclusive corporate privileges.
             </p>
 
             <form onSubmit={handleSubscribe} className="relative">

@@ -5,7 +5,6 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 
 interface PromoBannerProps {
-  onRequestQuote: () => void;
   onExploreGifts: () => void;
 }
 
@@ -26,36 +25,39 @@ const bannerSlides: BannerSlide[] = [
   {
     id: 0,
     type: "composed",
-    bgGradient: "bg-gradient-to-r from-[#d98910] via-[#ea9e22] to-[#f5ab32]",
-    accentColor: "text-[#fff2d6]",
-    tagline: "Corporate Gifting Concierge",
-    title: "Corporate Joy, Tailor-made",
-    subtitle: "Curated executive kits, onboarding boxes & meaningful client gestures",
-    ctaText: "Explore Corporate",
-    productImage: "/images/kurma-onboarding-box.jpg",
+    bgGradient: "bg-gradient-to-r from-[#0b3320] via-[#0f432a] to-[#155938]",
+    accentColor: "text-[#eed08e]",
+    tagline: "Royal Heritage Collection",
+    title: "Mysore Sandalwood & Oudh Agarbatti",
+    subtitle: "Handcrafted with pure aged chandan, aromatic resins & natural oils",
+    ctaText: "Explore Sandalwood",
+    productImage: "/images/agarbatti-sandalwood.jpg",
   },
   {
     id: 1,
-    type: "image",
-    image: "/images/banners/banner-birthday.jpg",
-    title: "Birthday Joy, Gift-wrapped",
-    subtitle: "Curated bloom, cakes & more for thoughtful celebrations",
+    type: "composed",
+    bgGradient: "bg-gradient-to-r from-[#072818] via-[#0d3f27] to-[#125032]",
+    accentColor: "text-[#eed08e]",
+    tagline: "Sacred Devotion & Blessings",
+    title: "Temple Floral & Rose Dhoop Sticks",
+    subtitle: "Hand-rolled from sacred temple flowers, 100% charcoal-free & soothing",
     ctaText: "Order Now",
+    productImage: "/images/agarbatti-temple-flora.jpg",
   },
   {
     id: 2,
     type: "composed",
-    bgGradient: "bg-gradient-to-r from-[#072448] via-[#0b3260] to-[#0f3f78]",
+    bgGradient: "bg-gradient-to-r from-[#051f13] via-[#0a351f] to-[#10472c]",
     accentColor: "text-[#eed08e]",
-    tagline: "Grand Celebrations",
-    title: "Festive Wonders, Handcrafted",
-    subtitle: "Artisanal gourmet treats, brass keepsakes & celebratory hampers",
-    ctaText: "View Festive Gifts",
-    productImage: "/images/kurma-festive-box.jpg",
+    tagline: "Festive Heirloom Gifting",
+    title: "Royal Incense & Brass Urli Trunks",
+    subtitle: "Handcrafted antique lotus burners paired with luxury agarbatti sets",
+    ctaText: "View Festive Trunks",
+    productImage: "/images/agarbatti-gift-hamper.jpg",
   },
 ];
 
-export function PromoBanner({ onRequestQuote, onExploreGifts }: PromoBannerProps) {
+export function PromoBanner({ onExploreGifts }: PromoBannerProps) {
   // Start with Slide 1 (Green Birthday Banner) active by default matching reference screenshot
   const [currentIndex, setCurrentIndex] = useState(1);
   const touchStartX = useRef<number | null>(null);
@@ -91,7 +93,7 @@ export function PromoBanner({ onRequestQuote, onExploreGifts }: PromoBannerProps
 
   return (
     <section
-      className="w-full bg-white py-4 sm:py-6 overflow-hidden relative select-none"
+      className="w-full bg-[#072515] bg-[url('/images/green-texture.png')] bg-repeat py-4 sm:py-6 overflow-hidden relative select-none"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
@@ -208,7 +210,7 @@ export function PromoBanner({ onRequestQuote, onExploreGifts }: PromoBannerProps
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            onRequestQuote();
+                            onExploreGifts();
                           }}
                           className="px-4 sm:px-5 py-2 sm:py-2.5 bg-white text-stone-900 text-xs sm:text-sm font-semibold rounded-full inline-flex items-center gap-1.5 shadow-sm hover:bg-stone-50 hover:scale-105 active:scale-95 transition-all cursor-pointer"
                         >

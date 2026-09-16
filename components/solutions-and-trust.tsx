@@ -1,109 +1,140 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import {
   ArrowRight,
-  Users,
-  SlidersHorizontal,
-  FileEdit,
+  Leaf,
+  Flame,
+  Sparkles,
   ShieldCheck,
+  Check,
+  ShoppingBag,
 } from "lucide-react";
 
 interface SolutionsAndTrustProps {
-  onRequestQuote: () => void;
+  onAddToCart?: (item: { id: string; name: string; price: number; image: string; quantity: number }) => void;
+  onExploreProducts?: () => void;
 }
 
-export function SolutionsAndTrust({ onRequestQuote }: SolutionsAndTrustProps) {
-  const solutions = [
+export function SolutionsAndTrust({ onAddToCart, onExploreProducts }: SolutionsAndTrustProps) {
+  const [addedIdx, setAddedIdx] = useState<number | null>(null);
+
+  const giftHampers = [
     {
-      title: "EMPLOYEE ONBOARDING",
-      description: "Warm welcomes that build belonging from day one.",
-      image: "/images/kurma-onboarding-box.jpg",
+      id: "hamper-1",
+      title: "MINDFULNESS SANDALWOOD HAMPER",
+      description: "Aged Mysore chandan sticks, brass lotus stand & organic dhoop.",
+      price: 950,
+      priceDisplay: "₹950",
+      image: "/images/agarbatti-sandalwood.jpg",
     },
     {
-      title: "CLIENT APPRECIATION",
-      description: "Strengthen relationships with meaningful gestures.",
-      image: "/images/kurma-gift-box.jpg",
+      id: "hamper-2",
+      title: "SACRED TEMPLE BLESSINGS TRUNK",
+      description: "Consecrated temple mogra & rose bathi in velvet keepsake box.",
+      price: 1450,
+      priceDisplay: "₹1,450",
+      image: "/images/agarbatti-hero.jpg",
     },
     {
-      title: "EXECUTIVE GIFTS",
-      description: "Premium gifts for leaders and top performers.",
-      image: "/images/kurma-hero-box.jpg",
+      id: "hamper-3",
+      title: "ANTIQUE BRASS LOTUS & OUDH BOX",
+      description: "Heirloom handcrafted brass burner paired with rich Assam oudh.",
+      price: 2250,
+      priceDisplay: "₹2,250",
+      image: "/images/agarbatti-brass-burner.jpg",
     },
     {
-      title: "EVENT & CONFERENCE GIFTS",
-      description: "Memorable giveaways that represent your brand.",
-      image: "/images/kurma-festive-box.jpg",
+      id: "hamper-4",
+      title: "ROYAL FESTIVE INCENSE & URLI SET",
+      description: "Grand brass pooja urli, assorted artisanal bathi & brass diya.",
+      price: 3850,
+      priceDisplay: "₹3,850",
+      image: "/images/agarbatti-gift-hamper.jpg",
     },
   ];
 
-  const steps = [
+  const pillars = [
     {
       num: "01",
-      icon: Users,
-      title: "Consult & Curate",
-      desc: "Share your needs and we recommend the best options.",
+      icon: Leaf,
+      title: "100% Pure & Natural",
+      desc: "Pure aged sandalwood, aromatic herbs, and sacred tree resins.",
     },
     {
       num: "02",
-      icon: SlidersHorizontal,
-      title: "Customize",
-      desc: "Add your logo, message, and branding elements.",
+      icon: Flame,
+      title: "Zero Toxic Charcoal",
+      desc: "Clean white fragrant smoke with zero headache or black soot.",
     },
     {
       num: "03",
-      icon: FileEdit,
-      title: "Review & Approve",
-      desc: "We share previews for your approval.",
+      icon: ShieldCheck,
+      title: "Temple Petals",
+      desc: "Sacred consecrated temple flowers hand-rolled with devotion.",
     },
     {
       num: "04",
-      icon: ShieldCheck,
-      title: "Deliver With Care",
-      desc: "Nationwide delivery, on-time, every time.",
+      icon: Sparkles,
+      title: "Express Delivery",
+      desc: "Safe fragile-proof doorstep delivery across India in 2-4 days.",
     },
   ];
 
+  const handleAddHamper = (item: typeof giftHampers[0], idx: number) => {
+    if (onAddToCart) {
+      onAddToCart({
+        id: item.id,
+        name: item.title,
+        price: item.price,
+        image: item.image,
+        quantity: 1,
+      });
+      setAddedIdx(idx);
+      setTimeout(() => setAddedIdx(null), 1500);
+    }
+  };
+
   return (
-    <div className="w-full bg-white pb-24 space-y-20">
+    <div className="w-full bg-[#072515] bg-[url('/images/green-texture.png')] bg-repeat pb-24 space-y-20 text-white">
       {/* Top Centered CTA Button: View All Products */}
       <div className="flex justify-center -mt-2">
         <button
-          onClick={onRequestQuote}
-          className="inline-flex items-center gap-2.5 px-6 py-2 bg-white hover:bg-[#fbf8f2] text-stone-700 text-xs sm:text-sm font-medium rounded-sm border border-[#c0881b]/70 hover:border-[#c0881b] transition-all shadow-2xs group cursor-pointer"
+          onClick={onExploreProducts}
+          className="inline-flex items-center gap-2.5 px-6 py-2.5 bg-white hover:bg-stone-50 text-stone-900 text-xs sm:text-sm font-medium rounded-md border border-stone-200 hover:border-[#eed08e] transition-all shadow-md group cursor-pointer"
         >
-          <span>View All Products</span>
-          <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 text-stone-600 group-hover:text-[#c0881b]" />
+          <span>Explore All Incense Sticks</span>
+          <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 text-[#c0881b]" />
         </button>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
-        {/* SECTION 1: Corporate Gifting Solutions */}
+        {/* SECTION 1: Sacred Gift Hampers */}
         <section id="solutions">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-serif text-stone-900 font-normal">
-              Corporate Gifting Solutions
+            <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-serif text-white font-normal">
+              Sacred Gift Hampers &amp; Collections
             </h2>
             {/* Elegant Gold Diamond Divider */}
             <div className="flex items-center justify-center gap-2 mt-2.5">
               <div className="h-[1px] w-20 sm:w-28 bg-[#eed08e]" />
-              <div className="w-2.5 h-2.5 rotate-45 border border-[#c0881b] bg-white flex items-center justify-center">
-                <div className="w-1 h-1 bg-[#c0881b]" />
+              <div className="w-2.5 h-2.5 rotate-45 border border-[#eed08e] bg-[#072515] flex items-center justify-center">
+                <div className="w-1 h-1 bg-[#eed08e]" />
               </div>
               <div className="h-[1px] w-20 sm:w-28 bg-[#eed08e]" />
             </div>
           </div>
 
-          {/* 4 Solutions Cards Grid */}
+          {/* 4 Hampers Grid with Crisp White Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {solutions.map((item, idx) => (
+            {giftHampers.map((item, idx) => (
               <div
                 key={idx}
-                onClick={onRequestQuote}
-                className="bg-white rounded-xl sm:rounded-2xl border border-stone-200/80 overflow-hidden shadow-2xs hover:shadow-md hover:border-[#eed08e] transition-all duration-300 flex flex-col group cursor-pointer"
+                className="bg-white rounded-xl sm:rounded-2xl border border-stone-200/90 overflow-hidden shadow-md hover:shadow-2xl hover:border-amber-400/80 transition-all duration-300 flex flex-col group"
               >
                 {/* Image */}
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-stone-50">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-stone-100">
                   <Image
                     src={item.image}
                     alt={item.title}
@@ -113,22 +144,43 @@ export function SolutionsAndTrust({ onRequestQuote }: SolutionsAndTrustProps) {
                   />
                 </div>
 
-                {/* Content - Centered text matching reference image */}
-                <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between text-center relative">
+                {/* Content */}
+                <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between text-center relative bg-white">
                   <div>
                     <h3 className="text-[11px] sm:text-xs font-bold text-stone-900 tracking-wider uppercase mb-1.5">
                       {item.title}
                     </h3>
-                    <p className="text-xs text-stone-500 leading-relaxed max-w-[210px] mx-auto">
+                    <p className="text-xs text-stone-600 leading-relaxed max-w-[210px] mx-auto">
                       {item.description}
                     </p>
                   </div>
 
-                  {/* Arrow Action Button in bottom-right corner */}
-                  <div className="flex justify-end pt-3">
-                    <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#f4ebe1] group-hover:bg-[#eed08e] text-stone-600 group-hover:text-[#a97514] flex items-center justify-center transition-colors">
-                      <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+                  {/* Price & Add to Cart Button */}
+                  <div className="flex items-center justify-between pt-4 border-t border-stone-100 mt-3">
+                    <span className="text-xs sm:text-sm font-bold text-stone-900">
+                      {item.priceDisplay}
                     </span>
+
+                    <button
+                      onClick={() => handleAddHamper(item, idx)}
+                      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                        addedIdx === idx
+                          ? "bg-emerald-600 text-white"
+                          : "bg-[#fbf6ea] hover:bg-[#eed08e] text-[#c0881b]"
+                      }`}
+                    >
+                      {addedIdx === idx ? (
+                        <>
+                          <Check className="w-3.5 h-3.5" />
+                          <span>Added</span>
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingBag className="w-3.5 h-3.5" />
+                          <span>Add to Cart</span>
+                        </>
+                      )}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -136,31 +188,31 @@ export function SolutionsAndTrust({ onRequestQuote }: SolutionsAndTrustProps) {
           </div>
         </section>
 
-        {/* SECTION 2: Why Businesses Choose Us */}
+        {/* SECTION 2: Why Customers Choose Kurma */}
         <section>
           <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-serif text-stone-900 font-normal">
-              Why Businesses Choose Us
+            <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-serif text-white font-normal">
+              Why Thousands Choose Kurma Incense
             </h2>
             {/* Elegant Gold Diamond Divider */}
             <div className="flex items-center justify-center gap-2 mt-2.5">
               <div className="h-[1px] w-20 sm:w-28 bg-[#eed08e]" />
-              <div className="w-2.5 h-2.5 rotate-45 border border-[#c0881b] bg-white flex items-center justify-center">
-                <div className="w-1 h-1 bg-[#c0881b]" />
+              <div className="w-2.5 h-2.5 rotate-45 border border-[#eed08e] bg-[#072515] flex items-center justify-center">
+                <div className="w-1 h-1 bg-[#eed08e]" />
               </div>
               <div className="h-[1px] w-20 sm:w-28 bg-[#eed08e]" />
             </div>
           </div>
 
-          {/* 4 Process Capsules with Connecting Arrows */}
+          {/* 4 Process Capsules with Crisp White Background */}
           <div className="flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-1.5">
-            {steps.map((step, idx) => (
+            {pillars.map((step, idx) => (
               <div key={idx} className="flex items-center w-full lg:w-auto">
                 {/* Capsule */}
-                <div className="w-full lg:w-[245px] xl:w-[260px] bg-white rounded-full border border-[#e5d4b5] hover:border-[#c0881b] px-4 py-3 flex items-center gap-3.5 shadow-2xs hover:shadow-xs transition-all">
+                <div className="w-full lg:w-[245px] xl:w-[260px] bg-white rounded-full border border-stone-200/90 hover:border-amber-400 px-4 py-3 flex items-center gap-3.5 shadow-md hover:shadow-lg transition-all">
                   {/* Left Circle Icon */}
-                  <div className="w-11 h-11 rounded-full border border-[#eed08e] bg-[#fbf9f4] flex items-center justify-center text-stone-700 shrink-0">
-                    <step.icon className="w-5 h-5 stroke-[1.6] text-stone-700" />
+                  <div className="w-11 h-11 rounded-full border border-amber-200 bg-[#fbf6ea] flex items-center justify-center text-[#c0881b] shrink-0">
+                    <step.icon className="w-5 h-5 stroke-[1.6]" />
                   </div>
                   {/* Right Content */}
                   <div className="min-w-0 flex-1">
@@ -177,8 +229,8 @@ export function SolutionsAndTrust({ onRequestQuote }: SolutionsAndTrustProps) {
                 </div>
 
                 {/* Connector Arrow for desktop */}
-                {idx < steps.length - 1 && (
-                  <div className="hidden lg:flex items-center px-1 text-[#c0881b] shrink-0">
+                {idx < pillars.length - 1 && (
+                  <div className="hidden lg:flex items-center px-1 text-[#eed08e] shrink-0">
                     <ArrowRight className="w-3.5 h-3.5" />
                   </div>
                 )}
