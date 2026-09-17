@@ -1,53 +1,68 @@
 "use client";
 
 import { useState } from "react";
-import { Navbar } from "@/components/navbar";
-import { Hero } from "@/components/hero";
-import { PromoBanner } from "@/components/promo-banner";
-import { ProductShowcase } from "@/components/product-showcase";
-import { SolutionsAndTrust } from "@/components/solutions-and-trust";
-import { VideoStories } from "@/components/video-stories";
-import { TrustStats } from "@/components/trust-stats";
-import { ReviewsSection } from "@/components/reviews-section";
-import { Footer } from "@/components/footer";
-import { CartDrawer, CartItem } from "@/components/cart-drawer";
+import { Navbar } from "@/components/layout/navbar";
+import { Hero } from "@/components/home/hero";
+import { PromoBanner } from "@/components/home/promo-banner";
+import { ProductShowcase } from "@/components/home/product-showcase";
+import { SolutionsAndTrust } from "@/components/home/solutions-and-trust";
+import { VideoStories } from "@/components/home/video-stories";
+import { TrustStats } from "@/components/home/trust-stats";
+import { ReviewsSection } from "@/components/home/reviews-section";
+import { Footer } from "@/components/layout/footer";
+import { CartDrawer, CartItem } from "@/components/cart/cart-drawer";
+import { ProductCustomizerModal } from "@/components/product/product-customizer-modal";
+import { ProductSKU } from "@/lib/products";
 
 export default function Home() {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [customizingProduct, setCustomizingProduct] = useState<ProductSKU | null>(null);
+
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
-      id: "pick-1",
-      name: "Royal Mysore Sandalwood Agarbatti (Pack of 50)",
-      price: 550,
-      image: "/images/agarbatti-sandalwood.jpg",
+      id: "init-marble-box",
+      skuId: "marble-gift-box",
+      name: "Elements in Harmony Luxury Marble Gift Box",
+      price: 4999,
+      priceDisplay: "₹4,999",
+      image: "/images/product/image9.png",
       quantity: 1,
+      customizations: {
+        "Brass Plaque Engraving": "Om Shanti • Blessings & Harmony",
+        "Wax Seal & Ribbon": "Imperial Gold Wax Seal",
+      },
     },
   ]);
 
   const totalCartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  const handleAddToCart = (item: {
-    id: string;
-    name: string;
-    price: number;
-    image?: string;
-    quantity?: number;
-  }) => {
+  const handleAddToCart = (item: CartItem) => {
     setCartItems((prev) => {
-      const existing = prev.find((i) => i.id === item.id);
+      // If exact same ID or same SKU without custom diff, increment
+      const existing = prev.find(
+        (i) =>
+          i.id === item.id ||
+          (i.skuId === item.skuId &&
+            JSON.stringify(i.customizations || {}) === JSON.stringify(item.customizations || {}))
+      );
+
       if (existing) {
         return prev.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + (item.quantity || 1) } : i
+          i === existing ? { ...i, quantity: i.quantity + (item.quantity || 1) } : i
         );
       }
+
       return [
         ...prev,
         {
-          id: item.id,
+          id: item.id || `item-${Date.now()}`,
+          skuId: item.skuId,
           name: item.name,
           price: item.price,
-          image: item.image || "/images/agarbatti-sandalwood.jpg",
+          priceDisplay: item.priceDisplay,
+          image: item.image || "/images/product/image.png",
           quantity: item.quantity || 1,
+          customizations: item.customizations,
         },
       ];
     });
@@ -72,59 +87,60 @@ export default function Home() {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const scrollToCategories = () => {
-    const el = document.getElementById("categories");
+  const scrollToCatalog = () => {
+    const el = document.getElementById("catalog");
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  const scrollToBestsellers = () => {
-    const el = document.getElementById("bestsellers");
+  const scrollToSolutions = () => {
+    const el = document.getElementById("solutions");
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#072515] bg-[url('/images/green-texture.png')] bg-repeat text-white selection:bg-[#eed08e] selection:text-[#072515]">
+    <div className="min-h-screen flex flex-col bg-[#072515] bg-[url('/images/textures/green-texture.png')] bg-repeat text-white selection:bg-[#eed08e] selection:text-[#072515]">
       {/* E-Commerce Header with Cart Drawer Trigger */}
       <Navbar
         cartCount={totalCartCount}
         onOpenCart={() => setIsCartOpen(true)}
-        onExploreProducts={scrollToCategories}
+        onExploreProducts={scrollToCatalog}
       />
 
       {/* Main Content */}
       <main className="flex-1">
-        {/* Hero Section - Pure E-Commerce with Shop CTAs */}
+        {/* Hero Section */}
         <Hero
-          onExploreGifts={scrollToCategories}
-          onExploreBestsellers={scrollToBestsellers}
+          onExploreGifts={scrollToCatalog}
+          onExploreBestsellers={scrollToSolutions}
         />
 
         {/* Promo Banner Slider Section */}
         <PromoBanner
-          onExploreGifts={scrollToCategories}
+          onExploreGifts={scrollToCatalog}
         />
 
-        {/* Categories & Signature Picks Section */}
-        <div id="categories">
+        {/* Master Catalog & 5 Elements Spotlight */}
+        <div id="catalog">
           <ProductShowcase
             onAddToCart={handleAddToCart}
+            onCustomizeProduct={(product) => setCustomizingProduct(product)}
           />
         </div>
 
-        {/* Joyful Gifting Stories Video Section with Add to Cart */}
+        {/* Sacred Gifting Stories Video Section with Direct Add to Cart */}
         <VideoStories
           onAddToCart={handleAddToCart}
-          onExploreProducts={scrollToCategories}
+          onExploreProducts={scrollToCatalog}
         />
 
-        {/* Curated Gifting Hampers with Buy Now / Add to Cart */}
+        {/* Curated Gifting Suites & Heirloom Trunks */}
         <SolutionsAndTrust
           onAddToCart={handleAddToCart}
-          onExploreProducts={scrollToCategories}
+          onCustomizeProduct={(product) => setCustomizingProduct(product)}
         />
 
         {/* Trust Metrics Bar */}
@@ -132,12 +148,20 @@ export default function Home() {
 
         {/* Customer Reviews & Promotional Welcome Offer */}
         <ReviewsSection
-          onExploreProducts={scrollToCategories}
+          onExploreProducts={scrollToCatalog}
         />
       </main>
 
       {/* Footer */}
       <Footer />
+
+      {/* Interactive SKU Customizer Modal */}
+      <ProductCustomizerModal
+        product={customizingProduct}
+        isOpen={customizingProduct !== null}
+        onClose={() => setCustomizingProduct(null)}
+        onAddToCart={handleAddToCart}
+      />
 
       {/* Slide-over Interactive E-Commerce Shopping Cart */}
       <CartDrawer
@@ -146,7 +170,7 @@ export default function Home() {
         items={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
-        onExploreProducts={scrollToCategories}
+        onExploreProducts={scrollToCatalog}
       />
     </div>
   );

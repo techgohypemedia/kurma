@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kurma
 
-## Getting Started
+Kurma storefront built with Next.js, React, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+## Development
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Run npm ci, then npm run dev. Open http://localhost:3000.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- app/: Routes, root layout, global styles, and favicon.
+- components/cart/: Shopping cart drawer.
+- components/home/: Homepage sections.
+- components/layout/: Shared navigation and footer.
+- lib/: Shared utilities.
+- public/images/brand/: Brand artwork.
+- public/images/community/: Customer portraits.
+- public/images/hero/: Hero photography.
+- public/images/product/: Kurma product photography (MDF box, marble box, 5 fragrance boxes, brass turtle stand, medallion, pocket square, bookmark).
+- public/images/textures/: Background textures.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Reference public assets with /images/<folder>/<filename>. Keep only images used
+by the app in public/; design references and temporary screenshots do not belong
+there. Shared UI primitives can be added with the existing components.json
+configuration when needed.
 
-## Learn More
+## Checks
 
-To learn more about Next.js, take a look at the following resources:
+Run npm run lint, npx tsc --noEmit, and npm run build.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The production build uses next/font/google and needs access to Google Fonts.
