@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 
@@ -53,16 +54,18 @@ const bannerSlides: BannerSlide[] = [
 ];
 
 export function PromoBanner({ onExploreGifts }: PromoBannerProps) {
+  const reduced = useReducedMotion();
   const [currentIndex, setCurrentIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
 
   // Auto-advance banner every 4s
   useEffect(() => {
+    if (reduced) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % bannerSlides.length);
     }, 4200);
     return () => clearInterval(timer);
-  }, []);
+  }, [reduced]);
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev === 0 ? bannerSlides.length - 1 : prev - 1));

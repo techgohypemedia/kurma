@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display, Cinzel } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { CartProvider } from "@/lib/cart-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -49,7 +50,8 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full flex flex-col bg-white text-stone-900 selection:bg-amber-100 selection:text-amber-900">
-        {children}
+        <a href="#main-content" className="skip-link">Skip to content</a>
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );

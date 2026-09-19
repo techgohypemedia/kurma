@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { ArrowRight, Leaf, Flame, ShieldCheck, PenTool } from "lucide-react";
 
@@ -9,6 +10,7 @@ interface HeroProps {
 }
 
 export function Hero({ onExploreGifts, onExploreBestsellers }: HeroProps) {
+  const reduced = useReducedMotion();
   const trustFeatures = [
     {
       icon: Leaf,
@@ -49,13 +51,14 @@ export function Hero({ onExploreGifts, onExploreBestsellers }: HeroProps) {
             className="object-cover object-[70%_center] lg:object-[72%_center]"
             sizes="(max-width: 1024px) 100vw, 58vw"
           />
+          <div className="absolute inset-0 bg-[#072515]/75 lg:hidden" />
           {/* Soft edge blend into deep green */}
           <div className="absolute inset-y-0 left-0 w-48 sm:w-80 lg:w-96 bg-linear-to-r from-[#072515] via-[#072515]/95 to-transparent pointer-events-none" />
         </div>
 
         <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 z-10">
           {/* Left Copy Section */}
-          <div className="max-w-2xl lg:max-w-[580px] xl:max-w-[660px] space-y-7">
+          <motion.div initial={{ opacity: 0, y: reduced ? 0 : 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduced ? 0 : 0.8, ease: [0.22, 1, 0.36, 1] }} className="max-w-2xl lg:max-w-[580px] xl:max-w-[660px] space-y-7">
             {/* Eyebrow */}
             <div>
               <span className="text-xs sm:text-sm font-semibold tracking-[0.24em] text-[#eed08e] uppercase">
@@ -64,7 +67,7 @@ export function Hero({ onExploreGifts, onExploreBestsellers }: HeroProps) {
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[66px] font-serif font-normal text-white leading-[1.08] tracking-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[66px] font-serif font-normal text-white leading-[1.15] tracking-tight">
               Elements in Harmony. <br />
               <span className="italic font-normal text-[#eed08e]">
                 Higher Consciousness.
@@ -89,7 +92,7 @@ export function Hero({ onExploreGifts, onExploreBestsellers }: HeroProps) {
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <button
                 onClick={onExploreGifts}
-                className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-[#c0881b] hover:bg-[#a97514] text-white text-base sm:text-[17px] font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.98] group cursor-pointer"
+                className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-[#eed08e] hover:bg-[#f7e8c4] text-[#072515] text-base sm:text-[17px] font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.98] group cursor-pointer"
               >
                 <span>Explore Initial Collection</span>
                 <ArrowRight className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" />
@@ -102,7 +105,7 @@ export function Hero({ onExploreGifts, onExploreBestsellers }: HeroProps) {
                 View Marble Trunk
               </button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 

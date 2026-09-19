@@ -179,7 +179,7 @@ export function VideoStories({ onAddToCart, onExploreProducts }: VideoStoriesPro
 
   return (
     <section className="w-full bg-[#072515] bg-[url('/images/textures/green-texture.png')] bg-repeat py-12 sm:py-16 text-white border-t border-[#eed08e]/15">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-7">
+      <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 space-y-7">
         {/* Section Heading */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
           <div>
@@ -207,7 +207,7 @@ export function VideoStories({ onAddToCart, onExploreProducts }: VideoStoriesPro
         </div>
 
         {/* 5-Column Balanced Grid Layout */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3.5 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-5 lg:gap-6">
           {storiesData.map((story, index) => (
             <StoryCard
               key={story.id}

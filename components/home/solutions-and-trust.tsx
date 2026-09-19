@@ -10,6 +10,8 @@ import {
   ShieldCheck,
   Check,
   ShoppingBag,
+  Plus,
+  Bookmark,
 } from "lucide-react";
 import { getProductById, ProductSKU, createCartItemId } from "@/lib/products";
 import { CartItem } from "@/components/cart/cart-drawer";
@@ -115,7 +117,7 @@ export function SolutionsAndTrust({
 
   return (
     <div className="w-full bg-[#072515] bg-[url('/images/textures/green-texture.png')] bg-repeat pb-20 space-y-16 text-white border-t border-[#eed08e]/15">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 pt-6">
+      <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 space-y-16 pt-6">
 
         {/* SECTION 1: Featured Gifting Suites */}
         <section id="solutions">
@@ -137,73 +139,66 @@ export function SolutionsAndTrust({
             </div>
           </div>
 
-          {/* 4 Hampers Grid with Crisp White Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {/* 4 Hampers Grid with Luxury Minimal Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
             {featuredCollections.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-xl sm:rounded-2xl border border-stone-200/90 overflow-hidden shadow-md hover:shadow-2xl hover:border-amber-400 transition-all duration-300 flex flex-col group text-stone-900"
+                onClick={() => handleCustomize(item.skuId)}
+                className="group relative flex flex-col cursor-pointer select-none transition-transform duration-300"
               >
-                {/* Image */}
-                <div
-                  className="relative aspect-16/10 w-full overflow-hidden bg-stone-100 cursor-pointer"
-                  onClick={() => handleCustomize(item.skuId)}
-                >
+                {/* Modern Image Canvas with Aspect-[4/5] & Rounded Corners */}
+                <div className="relative w-full aspect-[4/5] overflow-hidden rounded-xl bg-[#061e11] shadow-2xs">
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 25vw"
                   />
-                  {item.badge && (
-                    <span className="absolute top-2.5 left-2.5 text-[10px] font-bold bg-[#072515]/90 text-[#eed08e] px-2 py-0.5 rounded-full border border-[#eed08e]/30 shadow-xs">
-                      {item.badge}
-                    </span>
-                  )}
+
+                  {/* Bookmark Ribbon Icon */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                    title="Save to Wishlist"
+                    aria-label="Save to Wishlist"
+                    className="absolute top-3.5 right-3.5 z-10 p-1 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)] transition-transform active:scale-90 hover:scale-110 cursor-pointer"
+                  >
+                    <Bookmark className="w-4 h-4 text-white stroke-[2]" />
+                  </button>
                 </div>
 
-                {/* Content */}
-                <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between text-center relative bg-white">
-                  <div>
-                    <h3
-                      onClick={() => handleCustomize(item.skuId)}
-                      className="text-xs font-bold text-stone-900 tracking-wider uppercase mb-1.5 hover:text-[#c0881b] cursor-pointer"
-                    >
+                {/* Minimalist Info Row Directly Beneath Image */}
+                <div className="mt-2.5 flex items-start justify-between gap-2 px-0.5">
+                  <div className="space-y-0.5 min-w-0 flex-1">
+                    <h3 className="text-xs sm:text-[13px] font-medium tracking-tight leading-snug truncate transition-colors text-[#fdfcf9] group-hover:text-[#eed08e]">
                       {item.title}
                     </h3>
-                    <p className="text-xs text-stone-600 leading-relaxed max-w-[210px] mx-auto">
-                      {item.description}
-                    </p>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs sm:text-[12.5px] font-medium text-[#eed08e]">
+                        {item.priceDisplay}
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Price & Add to Cart Button (Exact original layout) */}
-                  <div className="flex items-center justify-between pt-4 border-t border-stone-100 mt-3">
-                    <span className="text-xs sm:text-sm font-bold text-stone-900">
-                      {item.priceDisplay}
-                    </span>
-
-                    <button
-                      onClick={() => handleAddHamper(item, idx)}
-                      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                        addedIdx === idx
-                          ? "bg-emerald-600 text-white"
-                          : "bg-[#fbf6ea] hover:bg-[#eed08e] text-[#c0881b]"
-                      }`}
-                    >
-                      {addedIdx === idx ? (
-                        <>
-                          <Check className="w-3.5 h-3.5" />
-                          <span>Added</span>
-                        </>
-                      ) : (
-                        <>
-                          <ShoppingBag className="w-3.5 h-3.5" />
-                          <span>Add to Cart</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
+                  {/* Quick Action Button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAddHamper(item, idx);
+                    }}
+                    title={`Add ${item.title} to cart`}
+                    aria-label={`Add ${item.title} to cart`}
+                    className="shrink-0 p-1 text-[#eed08e] hover:text-white hover:scale-125 transition-all duration-200 cursor-pointer"
+                  >
+                    {addedIdx === idx ? (
+                      <Check className="w-4 h-4 stroke-[2.5] text-emerald-400" />
+                    ) : (
+                      <Plus className="w-4 h-4 stroke-[1.75]" />
+                    )}
+                  </button>
                 </div>
               </div>
             ))}
@@ -211,47 +206,34 @@ export function SolutionsAndTrust({
         </section>
 
         {/* SECTION 2: Why Customers Choose Kurma */}
-        <section>
+        <section className="pt-4">
           <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-serif text-white font-normal">
+            <h2 className="text-2xl sm:text-3xl font-serif text-white font-normal">
               Why Devotees &amp; Families Choose Kurma
             </h2>
-            {/* Elegant Gold Diamond Divider */}
             <div className="flex items-center justify-center gap-2 mt-2.5">
-              <div className="h-px w-20 sm:w-28 bg-[#eed08e]" />
-              <div className="w-2.5 h-2.5 rotate-45 border border-[#eed08e] bg-[#072515] flex items-center justify-center">
-                <div className="w-1 h-1 bg-[#eed08e]" />
-              </div>
-              <div className="h-px w-20 sm:w-28 bg-[#eed08e]" />
+              <div className="h-px w-20 bg-[#eed08e]/50" />
+              <div className="w-2 h-2 rotate-45 border border-[#eed08e] bg-[#072515]" />
+              <div className="h-px w-20 bg-[#eed08e]/50" />
             </div>
           </div>
 
-          {/* 4 Process Capsules */}
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-1.5">
+          {/* 4 Clean Pillars */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {pillars.map((step, idx) => (
-              <div key={idx} className="flex items-center w-full lg:w-auto">
-                <div className="w-full lg:w-[245px] xl:w-[260px] bg-white rounded-full border border-stone-200/90 hover:border-amber-400 px-4 py-3 flex items-center gap-3.5 shadow-md hover:shadow-lg transition-all text-stone-900">
-                  <div className="w-11 h-11 rounded-full border border-amber-200 bg-[#fbf6ea] flex items-center justify-center text-[#c0881b] shrink-0">
-                    <step.icon className="w-5 h-5 stroke-[1.6]" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <span className="text-[11px] font-bold text-stone-400 block leading-tight">
-                      {step.num}
-                    </span>
-                    <h4 className="text-xs sm:text-[13px] font-bold text-stone-900 truncate mt-0.5">
-                      {step.title}
-                    </h4>
-                    <p className="text-[10px] sm:text-[10.5px] text-stone-500 leading-tight mt-0.5 line-clamp-2">
-                      {step.desc}
-                    </p>
-                  </div>
+              <div
+                key={idx}
+                className="rounded-xl bg-[#0a311d]/60 border border-[#eed08e]/20 p-6 flex flex-col items-start text-left space-y-3 hover:border-[#eed08e]/40 transition-colors"
+              >
+                <div className="w-10 h-10 rounded-lg bg-[#072515] border border-[#eed08e]/30 flex items-center justify-center text-[#eed08e]">
+                  <step.icon className="w-5 h-5 stroke-[1.5]" />
                 </div>
-
-                {idx < pillars.length - 1 && (
-                  <div className="hidden lg:flex items-center px-1 text-[#eed08e] shrink-0">
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </div>
-                )}
+                <h3 className="text-base font-serif text-white font-medium">
+                  {step.title}
+                </h3>
+                <p className="text-xs sm:text-[13px] text-stone-300 leading-relaxed font-sans">
+                  {step.desc}
+                </p>
               </div>
             ))}
           </div>

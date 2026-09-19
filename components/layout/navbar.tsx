@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, ShoppingBag, Menu, X } from "lucide-react";
+import { ShoppingBag, Menu, X } from "lucide-react";
 
 interface NavbarProps {
   cartCount: number;
@@ -13,110 +13,63 @@ interface NavbarProps {
 
 export function Navbar({ cartCount, onOpenCart, onExploreProducts }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const navLinks = [
-    { name: "Home", href: "#home", active: true },
-    {
-      name: "Initial Collection",
-      href: "#catalog",
-      hasDropdown: true,
-      items: [
-        { title: "Elements in Harmony Marble Box", desc: "Flagship 5 elements luxury trunk" },
-        { title: "Kurma MDF Keepsake Gift Box", desc: "Artisanal rigid wooden gift box" },
-        { title: "5 Elements Fragrance Boxes", desc: "Earth, Water, Fire, Air, Space (27 sticks)" },
-        { title: "Heirloom Sacred Accessories", desc: "Brass Turtle Stand, Medallion, Pashmina, Bookmark" },
-      ],
-    },
-    { name: "5 Elements", href: "#elements-suite" },
-    { name: "Gift Trunks", href: "#solutions" },
-    { name: "Reviews", href: "#reviews" },
+    { name: "Home", href: "/" },
+    { name: "Shop", href: "/shop" },
+    { name: "5 Elements", href: "/elements" },
+    { name: "Gift Trunks", href: "/gift-trunks" },
+    { name: "Our Ritual", href: "/ritual" },
+    { name: "Reviews", href: "/reviews" },
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-stone-200 text-stone-900 transition-all shadow-xs">
+    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-stone-200/80 text-stone-900 transition-all shadow-xs">
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 h-20 flex items-center justify-between">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center shrink-0">
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
+          <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shrink-0">
             <Image
               src="/images/brand/kurma-turtle-transparent.png"
               alt="Kurma Logo"
-              width={64}
-              height={64}
-              className="w-full h-full object-contain"
+              width={56}
+              height={56}
+              className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
               priority
             />
           </div>
-          <span className="font-serif tracking-[0.18em] text-[20px] sm:text-[22px] font-bold text-stone-900 leading-none">
+          <span className="font-serif tracking-[0.2em] text-[20px] sm:text-[22px] font-bold text-stone-900 leading-none">
             KURMA
           </span>
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center space-x-8 text-[14px] text-stone-700 font-medium">
+        <nav className="hidden lg:flex items-center space-x-7 xl:space-x-8 text-[13.5px] xl:text-[14px] text-stone-700 font-medium">
           {navLinks.map((link) => (
-            <div
+            <Link
               key={link.name}
-              className="relative group py-2"
-              onMouseEnter={() => link.hasDropdown && setOpenDropdown(link.name)}
-              onMouseLeave={() => setOpenDropdown(null)}
+              href={link.href}
+              className="py-2 transition-colors hover:text-[#8b5f10] cursor-pointer text-stone-700 font-medium"
             >
-              <a
-                href={link.href}
-                onClick={(e) => {
-                  if (link.href === "#catalog" && onExploreProducts) {
-                    e.preventDefault();
-                    onExploreProducts();
-                  }
-                }}
-                className={`flex items-center gap-1 transition-colors hover:text-[#c0881b] cursor-pointer ${
-                  link.active
-                    ? "text-[#c0881b] font-semibold"
-                    : "text-stone-700"
-                }`}
-              >
-                <span>{link.name}</span>
-                {link.hasDropdown && (
-                  <ChevronDown className="w-3.5 h-3.5 text-stone-400 group-hover:text-[#c0881b] transition-transform duration-200 group-hover:rotate-180" />
-                )}
-              </a>
-
-              {/* Dropdown Menu */}
-              {link.hasDropdown && openDropdown === link.name && (
-                <div className="absolute top-full left-0 w-72 bg-white shadow-xl rounded-xl border border-stone-100 p-2 mt-1 animate-in fade-in-50 duration-150 text-stone-900">
-                  {link.items?.map((item, idx) => (
-                    <a
-                      key={idx}
-                      href={link.href}
-                      className="block p-2.5 rounded-lg hover:bg-[#fbf6ea] transition-colors"
-                    >
-                      <div className="text-xs font-semibold text-stone-900">
-                        {item.title}
-                      </div>
-                      <div className="text-[11px] text-stone-500 line-clamp-1 mt-0.5">
-                        {item.desc}
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
+              {link.name}
+            </Link>
           ))}
         </nav>
 
         {/* Right Action CTAs */}
-        <div className="flex items-center gap-3">
-          {/* Cart Button */}
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          {/* Refined Luxury Cart Icon Button (Icon Only) */}
           <button
             onClick={onOpenCart}
-            className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#c0881b] hover:bg-[#a97514] text-white text-xs sm:text-sm font-medium rounded-md shadow-xs hover:shadow transition-all duration-200 active:scale-[0.98] cursor-pointer"
+            aria-label={`View shopping cart with ${cartCount} items`}
+            className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-stone-200 hover:border-[#c0881b] bg-[#faf9f6] hover:bg-[#fbf6ea] text-stone-800 hover:text-[#8b5f10] flex items-center justify-center transition-all duration-200 shadow-2xs hover:shadow-xs group cursor-pointer"
           >
-            <ShoppingBag className="w-4 h-4 stroke-[2]" />
-            <span>Cart</span>
-            <span className="ml-0.5 px-1.5 py-0.2 bg-white/20 text-white rounded-full text-xs font-bold">
-              {cartCount}
-            </span>
+            <ShoppingBag className="w-5 h-5 stroke-[1.75] text-stone-700 group-hover:text-[#8b5f10] transition-colors" />
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 min-w-[19px] h-[19px] px-1 bg-[#072515] text-[#eed08e] border border-[#eed08e]/60 rounded-full text-[10.5px] font-bold flex items-center justify-center shadow-xs">
+                {cartCount}
+              </span>
+            )}
           </button>
 
           {/* Mobile Hamburger Toggle */}
@@ -124,6 +77,8 @@ export function Navbar({ cartCount, onOpenCart, onExploreProducts }: NavbarProps
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 text-stone-600 hover:text-stone-900 lg:hidden rounded-lg hover:bg-stone-100 cursor-pointer"
             aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -132,16 +87,16 @@ export function Navbar({ cartCount, onOpenCart, onExploreProducts }: NavbarProps
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-stone-200 px-6 py-4 space-y-3 shadow-lg text-stone-900">
+        <div id="mobile-navigation" className="lg:hidden bg-white/98 backdrop-blur-lg border-b border-stone-200 px-6 py-4 space-y-3 shadow-xl text-stone-900">
           {navLinks.map((link) => (
             <div key={link.name} className="border-b border-stone-100 pb-2">
-              <a
+              <Link
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block text-sm font-medium text-stone-800 hover:text-[#c0881b]"
+                className="block text-sm font-medium text-stone-800 hover:text-[#c0881b] transition-colors"
               >
                 {link.name}
-              </a>
+              </Link>
             </div>
           ))}
           <div className="pt-2">
@@ -150,10 +105,10 @@ export function Navbar({ cartCount, onOpenCart, onExploreProducts }: NavbarProps
                 setMobileMenuOpen(false);
                 onOpenCart();
               }}
-              className="w-full py-2.5 bg-[#c0881b] hover:bg-[#a97514] text-white text-sm font-medium rounded-md text-center flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-2.5 bg-[#072515] hover:bg-[#0a311d] text-[#eed08e] border border-[#eed08e]/40 text-sm font-cinzel font-semibold rounded-lg text-center flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-colors"
             >
               <ShoppingBag className="w-4 h-4 stroke-[2]" />
-              <span>View Cart ({cartCount})</span>
+              <span>Open Cart ({cartCount})</span>
             </button>
           </div>
         </div>

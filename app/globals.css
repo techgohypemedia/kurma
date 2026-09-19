@@ -162,3 +162,16 @@
 .pause-marquee:hover {
   animation-play-state: paused;
 }
+
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+[id] { scroll-margin-top: 100px; }
+button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid #c0881b; outline-offset: 5px; }
+.skip-link { position: fixed; top: -100px; left: 16px; z-index: 100; padding: 12px 20px; background: #eed08e; color: #072515; border-radius: 8px; }
+.skip-link:focus { top: 12px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .animate-marquee { animation: none; max-width: 100%; overflow-x: auto; }
+}
